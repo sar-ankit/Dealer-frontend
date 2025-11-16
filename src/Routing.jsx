@@ -1,6 +1,4 @@
-import React from 'react';
-
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import DealerPage from './pages/dealerPage';
 import VehiclePage from './pages/vehiclePage';
 import PaymentPage from './pages/paymentPage';
@@ -8,9 +6,6 @@ import PaymentPage from './pages/paymentPage';
 function App() {
   return (
     <Router>
-      <nav>
-        <Link to="/dealers">Dealers</Link> | <Link to="/vehicles">Vehicles</Link> | <Link to="/payments">Payments</Link>
-      </nav>
       <Routes>
         <Route path="/dealers" element={<DealerPage />} />
         <Route path="/vehicles" element={<VehiclePage />} />
@@ -19,5 +14,3 @@ function App() {
     </Router>
   );
 }
-
-export default App;

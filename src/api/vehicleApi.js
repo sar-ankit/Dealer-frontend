@@ -1,5 +1,9 @@
 import axios from 'axios';
-const BASE_URL = 'https://veldel.up.railway.app/api/vehicle';
+
+
+
+const BASE_API_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:8080/api';
+const BASE_URL = `${BASE_API_URL}/vehicle`;
 
 export const getVehicles = () => axios.get(BASE_URL);
 export const getVehicleById = (id) => axios.get(`${BASE_URL}/${id}`);

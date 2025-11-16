@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import DealerPage from './pages/dealerPage';
-import VehiclePage from './pages/vehiclePage';
-import PaymentPage from './pages/paymentPage';
+import DealerPage from './dealerPage';
+import VehiclePage from './vehiclePage';
+import PaymentPage from './paymentPage';
 
 function App() {
   return (

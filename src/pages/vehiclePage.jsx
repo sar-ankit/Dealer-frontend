@@ -162,7 +162,7 @@ function VehiclePage() {
 
         <div style={{ marginTop: 8 }}>
           <button type="submit" disabled={submitting}>
-            {submitting ? 'Adding...' : 'Add Vehicle'}
+            {submitting ? 'Adding...' : 'Add Vehiclee'}
           </button>
         </div>
       </form>

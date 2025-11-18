@@ -18,7 +18,7 @@ function VehicleForm({ dealers, onSubmit }) {
         {dealers.map(d => <option key={d.id} value={d.id}>{d.name}</option>)}
       </select>
       <button type="submit">Submit</button>
-      <h6>Note: After creating a vehicle, please refresh the page to see it in the list.</h6>
+      
     </form>
 
   );

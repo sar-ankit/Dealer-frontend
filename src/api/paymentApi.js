@@ -10,3 +10,5 @@ export const getPaymentById = (id) => axios.get(`${BASE_URL}/${id}`);
 export const createPayment = (data) => axios.post(`${BASE_URL}/create`, data);
 export const updatePayment = (id, data) => axios.put(`${BASE_URL}/${id}`, data);
 export const deletePayment = (id) => axios.delete(`${BASE_URL}/${id}`);
+
+// Additional payment-related API calls can be added here as needed

@@ -6,7 +6,7 @@ import { getDealers } from '../api/dealerApi';
 function VehiclePage() {
   const [vehicles, setVehicles] = useState([]);
   const [dealers, setDealers] = useState([]);
-  const [form, setForm] = useState({ model: '', price: '', vehicleStatus: 'AVAILABLE', dealerId: '', image: null });
+  const [form, setForm] = useState({ model: '', price: '', vehicleStatus: 'AVAILABLE', dealerId: '' });
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
@@ -60,10 +60,10 @@ function VehiclePage() {
         fd.append('price', form.price);
         fd.append('vehicleStatus', form.vehicleStatus);
         fd.append('dealerId', form.dealerId);
-        fd.append('image', form.image);
+        // fd.append('image', form.image);
 
         // Use direct fetch for multipart (api helper may not support FormData)
-        const resp = await fetch('https://veldel.up.railway.app/api/vehicles', {
+        const resp = await fetch('api/vehicles', {
           method: 'POST',
           body: fd
         });
@@ -85,7 +85,7 @@ function VehiclePage() {
 
    
       await fetchVehicles();
-      setForm({ model: '', price: '', vehicleStatus: 'AVAILABLE', dealerId: '', image: null });
+      setForm({ model: '', price: '', vehicleStatus: 'AVAILABLE', dealerId: '' });
     } catch (err) {
       console.error('handleSubmit error', err);
    
@@ -161,7 +161,7 @@ function VehiclePage() {
       </select>
 
       {/* Image Upload */}
-      <div>
+      {/* <div>
         <input
           type="file"
           accept="image/*"
@@ -177,7 +177,7 @@ function VehiclePage() {
           className="block w-full text-sm text-gray-700 border rounded-lg cursor-pointer bg-gray-50 p-2"
         />
         <small className="text-gray-500">Optional: attach vehicle image</small>
-      </div>
+      </div> */}
 
       {/* Submit */}
       <button
@@ -194,39 +194,42 @@ function VehiclePage() {
     </form>
 
     {/* Vehicle List */}
-    {loading ? (
-      <p className="text-center text-gray-600">Loading vehicles...</p>
-    ) : error ? (
-      <div className="text-red-600 mb-4 font-medium">{error}</div>
-    ) : (
-      <ul className="space-y-4">
-        {vehicles.map((v) => (
-          <li
-            key={v.id}
-            className="flex justify-between items-center bg-gray-100 p-4 rounded-lg shadow"
-          >
-            <div>
-              <p className="font-semibold">{v.model}</p>
-              <p className="text-sm text-gray-700">₹{v.price}</p>
-              <p className="text-xs text-gray-600">
-                {v.vehicleStatus}
-              </p>
-              <p className="text-xs mt-1 text-gray-500">
-                Dealer:{" "}
-                {v.dealer?.name || `#${v.dealerId || "N/A"}`}
-              </p>
-            </div>
+{loading ? (
+  <p className="text-center text-gray-600">Loading vehicles...</p>
+) : error ? (
+  <div className="text-red-600 mb-4 font-medium">{error}</div>
+) : (
+  <ul className="space-y-4">
+    {vehicles.map((v) => (
+      <li
+        key={v.id}
+        className="flex justify-between items-center bg-gray-100 p-4 rounded-lg shadow"
+      >
+        <div>
+          <p className="font-semibold">{v.model}</p>
+          <p className="text-sm text-gray-700">₹{v.price}</p>
+          <p className="text-xs text-gray-600">{v.vehicleStatus}</p>
 
-            <button
-              onClick={() => handleDelete(v.id)}
-              className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition"
-            >
-              Delete
-            </button>
-          </li>
-        ))}
-      </ul>
-    )}
+          <p className="text-xs mt-1 text-gray-500">
+            Dealer:{" "}
+            {v.dealer?.name
+              ? v.dealer.name
+              : v.dealer?.id
+              ? `#${v.dealer.id}`
+              : "Dealer N/A"}
+          </p>
+        </div>
+
+        <button
+          onClick={() => handleDelete(v.id)}
+          className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition"
+        >
+          Delete
+        </button>
+      </li>
+    ))}
+  </ul>
+)}
   </div>
 );
 

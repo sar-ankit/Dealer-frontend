@@ -63,7 +63,7 @@ function VehiclePage() {
         fd.append('image', form.image);
 
         // Use direct fetch for multipart (api helper may not support FormData)
-        const resp = await fetch('/api/vehicles', {
+        const resp = await fetch('https://veldel.up.railway.app/api/vehicles', {
           method: 'POST',
           body: fd
         });
@@ -78,7 +78,8 @@ function VehiclePage() {
           model: form.model,
           price: form.price,
           vehicleStatus: form.vehicleStatus,
-          dealerId: form.dealerId
+          dealer: { id: form.dealerId }
+         
         });
       }
 

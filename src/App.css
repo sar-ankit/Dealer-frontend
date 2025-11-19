@@ -36,3 +36,9 @@
     transform: rotate(360deg);
   }
 }
+
+.container {
+  width: 100vw;
+  min-height: 100vh;
+  background-color: black;
+}

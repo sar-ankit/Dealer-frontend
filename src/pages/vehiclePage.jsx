@@ -1,4 +1,4 @@
-// ...existing code...
+
 import React, { useEffect, useState } from 'react';
 import { getVehicles, createVehicle, deleteVehicle } from '../api/vehicleApi';
 import { getDealers } from '../api/dealerApi';
@@ -14,7 +14,7 @@ function VehiclePage() {
   useEffect(() => {
     fetchVehicles();
     fetchDealers();
-    // eslint-disable-next-line
+
   }, []);
 
   const fetchVehicles = async () => {
@@ -73,7 +73,7 @@ function VehiclePage() {
           throw new Error(text || `HTTP ${resp.status}`);
         }
       } else {
-        // No image: use existing API helper (assumes JSON)
+ 
         await createVehicle({
           model: form.model,
           price: form.price,
@@ -82,12 +82,12 @@ function VehiclePage() {
         });
       }
 
-      // refresh list and clear form
+   
       await fetchVehicles();
       setForm({ model: '', price: '', vehicleStatus: 'AVAILABLE', dealerId: '', image: null });
     } catch (err) {
       console.error('handleSubmit error', err);
-      // Better error message from axios/fetch
+   
       const msg = err?.response?.data?.message || err?.message || 'Unknown error';
       setError('Failed to add vehicle: ' + msg);
     } finally {
@@ -105,85 +105,130 @@ function VehiclePage() {
     }
   };
 
-  return (
-    <div style={{ padding: 20 }}>
-      <h2>Vehicle Management</h2>
+ return (
+  <div className="max-w-3xl mx-auto mt-10 p-6 bg-white shadow-xl rounded-xl">
+    <h2 className="text-2xl font-bold mb-6 text-center">Vehicle Management</h2>
 
-      <form onSubmit={handleSubmit} style={{ marginBottom: 20 }}>
-        <div>
-          <input
-            name="model"
-            value={form.model}
-            onChange={(e) => setForm({ ...form, model: e.target.value })}
-            placeholder="Model"
-          />
-        </div>
+    {/* Form */}
+    <form onSubmit={handleSubmit} className="flex flex-col gap-4 mb-8">
 
-        <div>
-          <input
-            name="price"
-            type="number"
-            value={form.price}
-            onChange={(e) => setForm({ ...form, price: e.target.value })}
-            placeholder="Price"
-          />
-        </div>
+      {/* Model */}
+      <input
+        name="model"
+        value={form.model}
+        onChange={(e) => setForm({ ...form, model: e.target.value })}
+        placeholder="Model"
+        className="border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+      />
 
-        <div>
-          <select
-            value={form.vehicleStatus}
-            onChange={(e) => setForm({ ...form, vehicleStatus: e.target.value })}
+      {/* Price */}
+      <input
+        name="price"
+        type="number"
+        value={form.price}
+        onChange={(e) => setForm({ ...form, price: e.target.value })}
+        placeholder="Price"
+        className="border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+      />
+
+      {/* Status */}
+      <select
+        value={form.vehicleStatus}
+        onChange={(e) =>
+          setForm({ ...form, vehicleStatus: e.target.value })
+        }
+        className="border rounded-lg p-3 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+      >
+        <option value="AVAILABLE">AVAILABLE</option>
+        <option value="SOLD">SOLD</option>
+      </select>
+
+      {/* Dealer */}
+      <select
+        value={form.dealerId}
+        onChange={(e) =>
+          setForm({ ...form, dealerId: e.target.value })
+        }
+        className="border rounded-lg p-3 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+      >
+        <option value="">Select Dealer</option>
+        {dealers.map((d) => (
+          <option key={d.id} value={d.id}>
+            {d.name}
+          </option>
+        ))}
+      </select>
+
+      {/* Image Upload */}
+      <div>
+        <input
+          type="file"
+          accept="image/*"
+          onChange={(e) =>
+            setForm({
+              ...form,
+              image:
+                e.target.files && e.target.files[0]
+                  ? e.target.files[0]
+                  : null,
+            })
+          }
+          className="block w-full text-sm text-gray-700 border rounded-lg cursor-pointer bg-gray-50 p-2"
+        />
+        <small className="text-gray-500">Optional: attach vehicle image</small>
+      </div>
+
+      {/* Submit */}
+      <button
+        type="submit"
+        disabled={submitting}
+        className={`p-3 rounded-lg text-white transition ${
+          submitting
+            ? "bg-gray-400 cursor-not-allowed"
+            : "bg-blue-600 hover:bg-blue-700"
+        }`}
+      >
+        {submitting ? "Adding..." : "Add Vehicle"}
+      </button>
+    </form>
+
+    {/* Vehicle List */}
+    {loading ? (
+      <p className="text-center text-gray-600">Loading vehicles...</p>
+    ) : error ? (
+      <div className="text-red-600 mb-4 font-medium">{error}</div>
+    ) : (
+      <ul className="space-y-4">
+        {vehicles.map((v) => (
+          <li
+            key={v.id}
+            className="flex justify-between items-center bg-gray-100 p-4 rounded-lg shadow"
           >
-            <option value="AVAILABLE">AVAILABLE</option>
-            <option value="SOLD">SOLD</option>
-          </select>
-        </div>
+            <div>
+              <p className="font-semibold">{v.model}</p>
+              <p className="text-sm text-gray-700">₹{v.price}</p>
+              <p className="text-xs text-gray-600">
+                {v.vehicleStatus}
+              </p>
+              <p className="text-xs mt-1 text-gray-500">
+                Dealer:{" "}
+                {v.dealer?.name || `#${v.dealerId || "N/A"}`}
+              </p>
+            </div>
 
-        <div>
-          <select
-            value={form.dealerId}
-            onChange={(e) => setForm({ ...form, dealerId: e.target.value })}
-          >
-            <option value="">Select Dealer</option>
-            {dealers.map((d) => (
-              <option key={d.id} value={d.id}>{d.name}</option>
-            ))}
-          </select>
-        </div>
+            <button
+              onClick={() => handleDelete(v.id)}
+              className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition"
+            >
+              Delete
+            </button>
+          </li>
+        ))}
+      </ul>
+    )}
+  </div>
+);
 
-        <div>
-          <input
-            type="file"
-            accept="image/*"
-            onChange={(e) => setForm({ ...form, image: e.target.files && e.target.files[0] ? e.target.files[0] : null })}
-          />
-          <small>Optional: attach vehicle image</small>
-        </div>
-
-        <div style={{ marginTop: 8 }}>
-          <button type="submit" disabled={submitting}>
-            {submitting ? 'Adding...' : 'Add Vehiclee'}
-          </button>
-        </div>
-      </form>
-
-      {loading ? (
-        <p>Loading vehicles...</p>
-      ) : error ? (
-        <div style={{ color: 'red', marginBottom: 12 }}>{error}</div>
-      ) : (
-        <ul>
-          {vehicles.map((v) => (
-            <li key={v.id} style={{ marginBottom: 8 }}>
-              {v.model} - ₹{v.price} ({v.vehicleStatus}) [{v.dealer?.name || `Dealer #${v.dealerId || 'N/A'}`}]
-              <button onClick={() => handleDelete(v.id)} style={{ marginLeft: 8 }}>Delete</button>
-            </li>
-          ))}
-        </ul>
-      )}
-    </div>
-  );
 }
 
 export default VehiclePage;
-// ...existing code...

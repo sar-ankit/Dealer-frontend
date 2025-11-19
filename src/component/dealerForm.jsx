@@ -6,14 +6,33 @@ function DealerForm({ onSubmit }) {
   const handleChange = (e) => setDealer({ ...dealer, [e.target.name]: e.target.value });
 
   return (
-    <form onSubmit={(e) => { e.preventDefault(); onSubmit(dealer); }}>
-      <input name="name" placeholder="Name" onChange={handleChange} />
-      <input name="email" placeholder="Email" onChange={handleChange} />
-      <select name="subscriptionType" onChange={handleChange}>
+    <form onSubmit={(e) => { e.preventDefault(); onSubmit(dealer); }}className="bg-white shadow p-4 rounded">
+      
+      <div className="mb-2" > 
+        <label className="block text-sm">Name</label>
+        <input name="name" placeholder="Name"  required className="border p-2 w-full rounded"  onChange={handleChange} />
+
+      </div>
+
+
+
+      <div className="mb-2">
+        <label className="block text-sm">Email</label>
+       <input name="email" placeholder="Email"  required className="border p-2 w-full rounded" onChange={handleChange} />
+      </div>
+      
+
+        <div className="mb-2">
+           <select name="subscriptionType" onChange={handleChange}>
         <option value="BASIC">BASIC</option>
         <option value="PREMIUM">PREMIUM</option>
       </select>
-      <button type="submit">Submit</button>
+
+        </div>
+
+      
+     
+      <button className="bg-blue-600 text-white px-4 py-2 rounded"  type="submit">Submit</button>
     </form>
   );
 }

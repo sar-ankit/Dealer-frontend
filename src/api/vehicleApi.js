@@ -5,7 +5,7 @@ const BASE_API_URL = process.env.REACT_APP_API_BASE_URL || 'https://veldel.up.ra
 const BASE_URL = `${BASE_API_URL}/vehicles`;
 
 
-export const getAllVehicles = () => axios.get(BASE_URL);
+export const getVehicles = () => axios.get(BASE_URL);
 export const getVehicleById = (id) => axios.get(`${BASE_URL}/${id}`);
 export const createVehicle = (data) => axios.post(`${BASE_URL}/create`, data);
 export const updateVehicle = (id, data) => axios.put(`${BASE_URL}/${id}`, data);

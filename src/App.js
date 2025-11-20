@@ -58,8 +58,6 @@ function App() {
           <ul className="space-y-2 text-sm">
             <li>Contact Us</li>
             <li>About Us</li>
-            <li>Careers</li>
-            <li>Flipkart Stories</li>
             <li>Press</li>
             <li>Corporate Information</li>
           </ul>
@@ -69,9 +67,9 @@ function App() {
         <div>
           <h4 className="text-white mb-3 font-semibold">GROUP COMPANIES</h4>
           <ul className="space-y-2 text-sm">
-            <li>Myntra</li>
-            <li>Cleartrip</li>
-            <li>Shopsy</li>
+            <li>Cars24</li>
+            <li>BBT</li>
+            <li>Mansoori</li>
           </ul>
         </div>
 
@@ -94,10 +92,6 @@ function App() {
             <li>Terms Of Use</li>
             <li>Security</li>
             <li>Privacy</li>
-            <li>Sitemap</li>
-            <li>Grievance Redressal</li>
-            <li>EPR Compliance</li>
-            <li>FSSAI Food Safety</li>
             <li>Connect App</li>
           </ul>
         </div>
@@ -106,12 +100,8 @@ function App() {
         <div className="md:border-l border-gray-600 pl-6">
           <h4 className="text-white mb-3 font-semibold">Mail Us:</h4>
           <p className="text-sm leading-relaxed">
-            Flipkart Internet Private Limited,<br />
-            Buildings Alyssa, Begonia &<br />
-            Clove Embassy Tech Village,<br />
-            Outer Ring Road, Devarabeesanahalli Village,<br />
-            Bengaluru, 560103,<br />
-            Karnataka, India
+            Veldel Private Limited,<br />
+            Buildings 7B
           </p>
 
           <h4 className="text-white mt-5 mb-2 font-semibold">Social:</h4>

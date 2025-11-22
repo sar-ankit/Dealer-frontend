@@ -38,7 +38,7 @@ function VehiclePage() {
       setDealers(res.data || []);
     } catch (err) {
       console.error('fetchDealers error', err);
-      // keep dealers empty but don't block page
+     
     }
   };
 
@@ -53,7 +53,7 @@ function VehiclePage() {
 
     setSubmitting(true);
     try {
-      // If user selected an image, send FormData (multipart)
+     
       if (form.image instanceof File) {
         const fd = new FormData();
         fd.append('model', form.model);
@@ -62,7 +62,7 @@ function VehiclePage() {
         fd.append('dealerId', form.dealerId);
         // fd.append('image', form.image);
 
-        // Use direct fetch for multipart (api helper may not support FormData)
+       
         const resp = await fetch('api/vehicles', {
           method: 'POST',
           body: fd
